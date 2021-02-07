@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/roman/CLionProjects/MAP2020/Bod_v1/bod.h
+
+/home/roman/CLionProjects/MAP2020/Bod_v1/inout.h
+iostream
+-
+fstream
+-
+iomanip
+-
+
+/home/roman/CLionProjects/MAP2020/Bod_v1/main.cpp
+inout.h
+/home/roman/CLionProjects/MAP2020/Bod_v1/inout.h
+cmath
+-
+bod.h
+/home/roman/CLionProjects/MAP2020/Bod_v1/bod.h
+
