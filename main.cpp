@@ -219,8 +219,6 @@ Usecka::operator PR() const
 Usecka::VR Usecka::getOs() const
 {
     Bod2D stred=getCenter();
-    Vektor smerovy = getNormalovy(); //smerovy vektor usecky je normalovy vo vseobecnej rovnici
-    Bod2D druhy = stred+smerovy;
-    Usecka os {stred,druhy};
+    Usecka os {stred,stred+getNormalovy()} ;//smerovy vektor usecky je normalovy vo vseobecnej rovnici
     return os.getVseobecna();
 }
