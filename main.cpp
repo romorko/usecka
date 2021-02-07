@@ -202,9 +202,8 @@ std::ostream &operator<<(std::ostream &os, const Usecka::PR &other)
 
 Usecka::PR Usecka::getParametricka() const
 {
-    Vektor smerovy = this->getSmerovy();
-    float s1=smerovy.getX();
-    float s2 =smerovy.getY();
+    float s1=this->getSmerovy().getX();//x = a1 + s1*t   y= a2 + s2*t
+    float s2 =this->getSmerovy().getY();
     float a1=X.getX();
     float a2=X.getY();
     std::cout<<Usecka::PR(a1, s1, a2, s2);

@@ -36,22 +36,23 @@ public:
     class VR
     {
     private:
-        float koeficienty[3];
+        float koeficienty[3];//koeficienty a,b,c rovnice ax+by+c=0
     public:
         VR(float ka, float kb, float kc):koeficienty{ka,kb,kc}{};
         friend std::ostream &operator<<(std::ostream & os,const VR & other);
-        float & operator[](int index){return koeficienty[index];};
+        float & operator[](int index){return koeficienty[index];};  //pretazeny operator [] pre nekonstantny aj konstantny pristup
         const float & operator[](int index) const{return koeficienty[index];}
     };
     class PR
     {
     private:
-        float koeficienty[4];
+        float koeficienty[4];//  koeficienty a1,s1,a2,s2 v rovniciach:  x = a1 + s1*t   y= a2 + s2*t
     public:
         PR(float ka1,float kv1,float ka2,float kv2):koeficienty{ka1,kv1,ka2,kv2}{};
-        float & operator[](int index){return koeficienty[index];};
-        const float & operator[](int index) const{return koeficienty[index];}
         friend std::ostream &operator<<(std::ostream & os,const PR & other);
+        float & operator[](int index){return koeficienty[index];}; //pretazeny operator [] pre nekonstantny aj konstantny pristup
+        const float & operator[](int index) const{return koeficienty[index];}
+
     };
 
     Usecka():X({0,0}),Y({0,0}){};
