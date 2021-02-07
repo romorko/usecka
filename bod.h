@@ -51,21 +51,24 @@ public:
         PR(float ka1,float kv1,float ka2,float kv2):koeficienty{ka1,kv1,ka2,kv2}{};
         float & operator[](int index){return koeficienty[index];};
         const float & operator[](int index) const{return koeficienty[index];}
+        friend std::ostream &operator<<(std::ostream & os,const PR & other);
     };
 
-    Usecka(){};
+    Usecka():X({0,0}),Y({0,0}){};
     Usecka(Bod2D A, Bod2D B) : X(A), Y(B){};
     explicit Usecka(Bod2D A) : X(A), Y(A){};
     friend std::ostream &operator<<(std::ostream &os, const Usecka &usecka);
     friend std::istream &operator>>(std::istream &is, Usecka &usecka);
     bool operator<(const Usecka &other) const;
     bool operator>(const Usecka &other) const;
-    operator VR() const;  //konverzia na vseobecnu rovnicu
-    operator float() const; //konverzia na float t.j. na velkost usecky
+    explicit operator VR() const;  //konverzia na vseobecnu rovnicu
+    explicit operator PR() const;  //konverzia na parametricku rovnicu
+    explicit operator float() const; //konverzia na float t.j. na velkost usecky
     float getDlzka() const;
     Vektor getNormalovy() const;
     Vektor getSmerovy() const;
     Bod2D getCenter() const;
     VR getVseobecna() const;
+    PR getParametricka() const;
 
 };

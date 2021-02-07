@@ -5,7 +5,7 @@ int comp(const void *prva,const void *druha );
 using namespace inout;
 int main()
 {
-/*    std::ifstream fin;
+/*   std::ifstream fin;
      std::ofstream fout;
      try
      {
@@ -35,7 +35,9 @@ int main()
     Usecka AB(A,B);
     cout<<AB;
     AB.getVseobecna();
+    AB.getParametricka();
     (Usecka::VR)AB;
+    (Usecka::PR)AB;
 
     return 0;
 }
@@ -190,4 +192,26 @@ Usecka::operator VR() const
 Usecka::operator float() const
 {
     return X.getDistance(Y);
+}
+
+std::ostream &operator<<(std::ostream &os, const Usecka::PR &other)
+{
+    os<<"Parametricka rovnica:"<<std::endl<<"x = "<<setw(4)<<std::noshowpos<<other[0]<<std::showpos<<setw(4)<<other[1]<<"*t"<<std::endl<<"y = "<<setw(4)<<std::noshowpos<<other[2]<<std::showpos<<setw(4)<<other[3]<<"*t"<<"   t je z R"<<std::endl;
+    return os;
+}
+
+Usecka::PR Usecka::getParametricka() const
+{
+    Vektor smerovy = this->getSmerovy();
+    float s1=smerovy.getX();
+    float s2 =smerovy.getY();
+    float a1=X.getX();
+    float a2=X.getY();
+    std::cout<<Usecka::PR(a1, s1, a2, s2);
+    return {a1, s1, a2, s2};
+}
+
+Usecka::operator PR() const
+{
+    return getParametricka();
 }
