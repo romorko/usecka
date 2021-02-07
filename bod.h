@@ -1,4 +1,3 @@
-
 class Bod2D{
 private:
     float x;
@@ -71,5 +70,6 @@ public:
     Bod2D getCenter() const;
     VR getVseobecna() const;
     PR getParametricka() const;
+    VR getOs() const;
 
 };

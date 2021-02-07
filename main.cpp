@@ -30,14 +30,15 @@ int main()
      {
          std::cout << ex;
      }*/
-    Bod2D A(1,2);
+    Bod2D A(1,3);
     Bod2D B(3,7);
     Usecka AB(A,B);
     cout<<AB;
     AB.getVseobecna();
     AB.getParametricka();
-    (Usecka::VR)AB;
-    (Usecka::PR)AB;
+    //(Usecka::VR)AB;
+    //(Usecka::PR)AB;
+    AB.getOs();
 
     return 0;
 }
@@ -106,10 +107,10 @@ void Bod2D::getSortedDistance(std::istream &is, std::ofstream &os)
     }
     qsort(Usecky,100,sizeof(Usecka),comp);
     std::cout<<"Utriedene podla velkosti"<<std::endl;
-    for(int i=0;i<100;++i)
+    for(auto i : Usecky)
     {
-        std::cout<<(float )Usecky[i]<<" "<<Usecky[i];
-        os<<(float)Usecky[i]<<" "<<Usecky[i];
+        std::cout<<(float )i<<" "<<i;
+        os<<(float)i<<" "<<i;
     }
 }
 
@@ -159,7 +160,7 @@ Vektor Usecka::getSmerovy() const
 
 Bod2D Usecka::getCenter() const
 {
-    return (X+Y)/2;
+    return X.getCenterPoint(Y);
 }
 
 int comp(const void *prva,const void *druha )
@@ -213,4 +214,13 @@ Usecka::PR Usecka::getParametricka() const
 Usecka::operator PR() const
 {
     return getParametricka();
+}
+
+Usecka::VR Usecka::getOs() const
+{
+    Bod2D stred=getCenter();
+    Vektor smerovy = getNormalovy(); //smerovy vektor usecky je normalovy vo vseobecnej rovnici
+    Bod2D druhy = stred+smerovy;
+    Usecka os {stred,druhy};
+    return os.getVseobecna();
 }
