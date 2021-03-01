@@ -94,12 +94,12 @@ clean: CMakeFiles/Bod_v1.dir/clean
 CMakeFiles/Bod_v1.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/roman/CLionProjects/MAP2020/Bod_v1/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target Bod_v1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/roman/CLionProjects/MAP2020/Bod_v1/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target Bod_v1"
 .PHONY : CMakeFiles/Bod_v1.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Bod_v1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/roman/CLionProjects/MAP2020/Bod_v1/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/roman/CLionProjects/MAP2020/Bod_v1/cmake-build-debug/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Bod_v1.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/roman/CLionProjects/MAP2020/Bod_v1/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/Bod_v1.dir/rule

@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/roman/CLionProjects/MAP2020/Bod_v1/bod.cpp">
+			<Option target="Bod_v1"/>
+		</Unit>
 		<Unit filename="/home/roman/CLionProjects/MAP2020/Bod_v1/bod.h">
 			<Option target="Bod_v1"/>
 		</Unit>

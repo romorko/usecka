@@ -143,6 +143,33 @@ Bod_v1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/build
 .PHONY : Bod_v1/fast
 
+bod.o: bod.cpp.o
+
+.PHONY : bod.o
+
+# target to build an object file
+bod.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/bod.cpp.o
+.PHONY : bod.cpp.o
+
+bod.i: bod.cpp.i
+
+.PHONY : bod.i
+
+# target to preprocess a source file
+bod.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/bod.cpp.i
+.PHONY : bod.cpp.i
+
+bod.s: bod.cpp.s
+
+.PHONY : bod.s
+
+# target to generate assembly for a file
+bod.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bod_v1.dir/build.make CMakeFiles/Bod_v1.dir/bod.cpp.s
+.PHONY : bod.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -179,6 +206,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Bod_v1"
+	@echo "... bod.o"
+	@echo "... bod.i"
+	@echo "... bod.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

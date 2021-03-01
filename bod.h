@@ -1,3 +1,7 @@
+#ifndef BOD_V1_BOD_H
+#define BOD_V1_BOD_H
+#include <iosfwd>
+
 class Bod2D{
 private:
     float x;
@@ -22,10 +26,11 @@ public:
     friend std::istream & operator>>(std::istream & is, Bod2D & bod);
     static void getMinDistance(std::istream & is);
     static void getSortedDistance(std::istream & is, std::ofstream &os);
+    Bod2D getJednotkovy() const;
+    int generuj(int min,int max) const;
 };
 
 using Vektor = Bod2D;
-
 class Usecka
 {
     private:
@@ -53,7 +58,16 @@ public:
         const float & operator[](int index) const{return koeficienty[index];}
 
     };
-
+    class Poloha
+    {
+    private:
+        char popis[11]{};
+        Bod2D priesecnik;
+    public:
+        Poloha(char const *text, const Bod2D& prienik);
+        Bod2D getpriesecnik()const{return priesecnik;};
+        friend std::ostream &operator<<(std::ostream &os, const Poloha &poloha);
+    };
     Usecka():X({0,0}),Y({0,0}){};
     Usecka(Bod2D A, Bod2D B) : X(A), Y(B){};
     explicit Usecka(Bod2D A) : X(A), Y(A){};
@@ -71,5 +85,31 @@ public:
     VR getVseobecna() const;
     PR getParametricka() const;
     VR getOs() const;
+    bool jeRovnobezna(const Usecka & other) const;
+    bool jeTotozna(const Usecka & other) const;
+    float getUhol(const Usecka & other, char typ='s') const;
+    Poloha getPoloha(const Usecka & other) const;
+    VR getOsUhla(const Usecka & other) const;
 
 };
+
+class Trojuholnik
+{
+private:
+    Bod2D A;
+    Bod2D B;
+    Bod2D C;
+    static bool existuje(Bod2D x, Bod2D y, Bod2D z);
+    static int generuj(int min, int max);
+public:
+    Trojuholnik(Bod2D x, Bod2D y, Bod2D z);
+    Trojuholnik();
+    float getVelkostStrany(char strana='a') const;
+    float getVelkostUhla(const char * uhol="alfa") const;
+    void ukazStrany() const;
+    void ukazUhly() const;
+
+};
+
+
+#endif //BOD_V1_BOD_H
