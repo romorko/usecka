@@ -282,12 +282,13 @@ bool Trojuholnik::existuje(Bod2D x, Bod2D y, Bod2D z)
 {
     Vektor s1=y-x;
     Vektor s2=z-x;
+    //cout<<s1<<s2<<endl;
     try
     {
-        cout<<x<<y<<z;
-        if((s1.getX()/s2.getX())==(s1.getY()/s2.getY()))
+        cout<<"Tri body:"<<x<<y<<z<<" ";
+        if((s2.getX()==0) || (s2.getY()==0)||(s1.getX()/s2.getX())==(s1.getY()/s2.getY()))
         {
-            throw "Takyto trojuholnik neexistuje!";
+            throw "Trojuholnik s vrcholmi v tychto bodoch neexistuje!";
         }
         cout<<"Trojuholnik OK."<<endl;
 
@@ -338,6 +339,8 @@ float Trojuholnik::getVelkostStrany(char strana) const
             break;
         case 'c':
             vysledok=A.getDistance(B);
+        default:
+            vysledok=B.getDistance(C);
     }
     return vysledok;
 }
@@ -357,6 +360,10 @@ float Trojuholnik::getVelkostUhla(const char * uhol) const
     {
         vysledok=Usecka(C,A).getUhol(Usecka(C,B));
     }
+    else
+    {
+        vysledok=Usecka(A,B).getUhol(Usecka(A,C));
+    }
     return vysledok ;
 }
 
@@ -370,4 +377,20 @@ void Trojuholnik::ukazUhly() const
 {
     cout<<"Uhly trojuholnika:(stupne) ";
     cout<<setw(5)<<setprecision(3)<<"alfa = "<<getVelkostUhla("alfa")<<setw(5)<<" beta = "<<getVelkostUhla("beta")<<setw(5)<<" gama = "<<getVelkostUhla("gama")<<endl;
+    //cout<<"Kontrolny sucet:"<<getVelkostUhla("alfa")+getVelkostUhla("beta")+getVelkostUhla("gama");
+}
+
+Bod2D Trojuholnik::getTazisko() const
+{
+    Bod2D stred1=A.getCenterPoint(B);
+    return stred1+(C-stred1)*1/3;
+}
+
+Bod2D Trojuholnik::getOrtocentrum() const
+{
+    Vektor smerovyVc = Usecka(A,B).getNormalovy();
+    Bod2D bodNaVyskeVc {smerovyVc+C};
+    Vektor smerovyVb = Usecka(A,C).getNormalovy();
+    Bod2D bodNaVyskeVb {smerovyVb+B};
+    return Usecka(bodNaVyskeVc,C).getPoloha(Usecka(bodNaVyskeVb,B)).getpriesecnik();
 }

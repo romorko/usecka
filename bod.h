@@ -83,6 +83,7 @@ public:
     Vektor getSmerovy() const;
     Bod2D getCenter() const;
     VR getVseobecna() const;
+    //static VR getVseobecna(const Bod2D &bodik,const Vektor &normalovy);
     PR getParametricka() const;
     VR getOs() const;
     bool jeRovnobezna(const Usecka & other) const;
@@ -108,6 +109,9 @@ public:
     float getVelkostUhla(const char * uhol="alfa") const;
     void ukazStrany() const;
     void ukazUhly() const;
+    Bod2D getTazisko() const;
+    Bod2D getOrtocentrum() const;
+
 
 };
 
