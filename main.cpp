@@ -36,10 +36,12 @@ int main()
     cout<<AB.getPoloha(CD);
     AB.getOsUhla(CD);*/
     using namespace inout;
-    Trojuholnik ABC{{1,10},{8,10},{5,15}};
+    Trojuholnik ABC{{1,10},{5,10},{10,15}};
     //Trojuholnik KLM;
     ABC.ukazStrany();
     ABC.ukazUhly();
+    cout<<"Obvod je:"<<ABC.getObvod()<<endl;
+    cout<<"Obsah je:"<<ABC.getObsah()<<endl;
     cout<<"Tazisko:"<<ABC.getTazisko()<<endl;
     cout<<"Ortocentrum:"<<ABC.getOrtocentrum()<<endl;
     return 0;

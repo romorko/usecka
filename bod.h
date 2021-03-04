@@ -96,6 +96,14 @@ public:
 
 class Trojuholnik
 {
+    class MsgErr
+    {
+    private:
+         const char * msg;
+    public:
+        MsgErr( const char * sprava):msg(sprava){};
+        void getMsg() const;
+    };
 private:
     Bod2D A;
     Bod2D B;
@@ -106,9 +114,11 @@ public:
     Trojuholnik(Bod2D x, Bod2D y, Bod2D z);
     Trojuholnik();
     float getVelkostStrany(char strana='a') const;
-    float getVelkostUhla(const char * uhol="alfa") const;
+    float getVelkostUhla(char * uhol) const;
     void ukazStrany() const;
     void ukazUhly() const;
+    float getObvod() const;
+    float getObsah() const;
     Bod2D getTazisko() const;
     Bod2D getOrtocentrum() const;
 

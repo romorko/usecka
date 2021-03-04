@@ -280,22 +280,21 @@ int Trojuholnik::generuj(int min, int max)
 
 bool Trojuholnik::existuje(Bod2D x, Bod2D y, Bod2D z)
 {
-    Vektor s1=y-x;
-    Vektor s2=z-x;
-    //cout<<s1<<s2<<endl;
+    float a=x.getDistance(y);
+    float b=x.getDistance(z);
+    float c=y.getDistance(z);
     try
     {
         cout<<"Tri body:"<<x<<y<<z<<" ";
-        if((s2.getX()==0) || (s2.getY()==0)||(s1.getX()/s2.getX())==(s1.getY()/s2.getY()))
+        if(!((a+b>c) * (a+c>b) * (b+c)>a))
         {
-            throw "Trojuholnik s vrcholmi v tychto bodoch neexistuje!";
+            throw Trojuholnik::MsgErr("Trojuholnik s vrcholmi v tychto bodoch neexistuje!");
         }
         cout<<"Trojuholnik OK."<<endl;
-
     }
-    catch(const char * text)
+    catch(const Trojuholnik::MsgErr &e)
     {
-        cout<<text<<endl;
+        e.getMsg();
         return false;
     }
     return true;
@@ -328,43 +327,71 @@ Trojuholnik::Trojuholnik(Bod2D X, Bod2D Y, Bod2D Z)
 
 float Trojuholnik::getVelkostStrany(char strana) const
 {
-    float vysledok;
-    switch(strana)
-    {
-        case 'a':
-            vysledok=B.getDistance(C);
-            break;
-        case 'b':
-            vysledok=A.getDistance(C);
-            break;
-        case 'c':
-            vysledok=A.getDistance(B);
-        default:
-            vysledok=B.getDistance(C);
+   float vysledok;
+   while(true)
+   {
+       try
+       {
+            switch(strana)
+            {
+                case 'a':
+                    vysledok=B.getDistance(C);
+                    break;
+                case 'b':
+                    vysledok=A.getDistance(C);
+                    break;
+                case 'c':
+                    vysledok=A.getDistance(B);
+                    break;
+                default:
+                    throw Trojuholnik::MsgErr("Taka strana nie je!");
+            }
+           return vysledok;
+       }
+       catch (const Trojuholnik::MsgErr &e)
+       {
+           e.getMsg();
+           cout<<" Zadaj stranu:";
+           cin>>strana;
+           continue;
+       }
     }
-    return vysledok;
 }
 
-float Trojuholnik::getVelkostUhla(const char * uhol) const
+float Trojuholnik::getVelkostUhla(char * uhol) const
 {
     float vysledok;
-    if (strcmp(uhol,"alfa")==0)
+    while(true)
     {
-        vysledok=Usecka(A,B).getUhol(Usecka(A,C));
+        try
+        {
+            if (strcmp(uhol,"alfa")==0)
+            {
+                vysledok=Usecka(A,B).getUhol(Usecka(A,C));
+            }
+            else if(strcmp(uhol,"beta")==0)
+            {
+                vysledok=Usecka(B,A).getUhol(Usecka(B,C));
+            }
+            else if(strcmp(uhol,"gama")==0)
+            {
+                vysledok=Usecka(C,A).getUhol(Usecka(C,B));
+            }
+            else
+            {
+                throw Trojuholnik::MsgErr("Taky uhol v trojuholniku ABC nie je!");
+            }
+            return vysledok ;
+        }
+        catch (const Trojuholnik::MsgErr & e)
+        {
+            e.getMsg();
+            cout<<" Zadaj spravny uhol (alfa,beta,gama): ";
+            cin>>uhol;
+            continue;
+        }
     }
-    else if(strcmp(uhol,"beta")==0)
-    {
-        vysledok=Usecka(B,A).getUhol(Usecka(B,C));
-    }
-    else if(strcmp(uhol,"gama")==0)
-    {
-        vysledok=Usecka(C,A).getUhol(Usecka(C,B));
-    }
-    else
-    {
-        vysledok=Usecka(A,B).getUhol(Usecka(A,C));
-    }
-    return vysledok ;
+
 }
 
 void Trojuholnik::ukazStrany() const
@@ -376,7 +403,7 @@ void Trojuholnik::ukazStrany() const
 void Trojuholnik::ukazUhly() const
 {
     cout<<"Uhly trojuholnika:(stupne) ";
-    cout<<setw(5)<<setprecision(3)<<"alfa = "<<getVelkostUhla("alfa")<<setw(5)<<" beta = "<<getVelkostUhla("beta")<<setw(5)<<" gama = "<<getVelkostUhla("gama")<<endl;
+    cout<<setw(5)<<setprecision(3)<<"alfa = "<<getVelkostUhla((char *)"alfa")<<setw(5)<<" beta = "<<getVelkostUhla((char *)"beta")<<setw(5)<<" gama = "<<getVelkostUhla((char *)"gama")<<endl;
     //cout<<"Kontrolny sucet:"<<getVelkostUhla("alfa")+getVelkostUhla("beta")+getVelkostUhla("gama");
 }
 
@@ -393,4 +420,20 @@ Bod2D Trojuholnik::getOrtocentrum() const
     Vektor smerovyVb = Usecka(A,C).getNormalovy();
     Bod2D bodNaVyskeVb {smerovyVb+B};
     return Usecka(bodNaVyskeVc,C).getPoloha(Usecka(bodNaVyskeVb,B)).getpriesecnik();
+}
+
+float Trojuholnik::getObvod() const
+{
+    return getVelkostStrany('a')+getVelkostStrany('b')+getVelkostStrany('c');
+}
+
+float Trojuholnik::getObsah() const
+{
+    float s = getObvod()/2;
+    return (float)sqrt(s*(s-getVelkostStrany('a'))*(s-getVelkostStrany('b'))*(s-getVelkostStrany('c')));
+}
+
+void Trojuholnik::MsgErr::getMsg() const
+{
+    cout<<msg;
 }
