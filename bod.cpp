@@ -194,11 +194,10 @@ Usecka::operator PR() const
     return getParametricka();
 }
 
-Usecka::VR Usecka::getOs() const
+Usecka Usecka::getOsStrany() const
 {
     Bod2D stred=getCenter();
-    Usecka os {stred,stred+getNormalovy()} ;//smerovy vektor usecky je normalovy vo vseobecnej rovnici
-    return os.getVseobecna();
+    return {stred,stred+getNormalovy()} ;//smerovy vektor usecky je normalovy vo vseobecnej rovnici
 }
 
 float Usecka::getUhol(const Usecka &other, char typ) const
@@ -258,15 +257,13 @@ std::ostream &operator<<(std::ostream &os, const Usecka::Poloha &poloha)
     return os;
 }
 
-Usecka::VR Usecka::getOsUhla(const Usecka &other) const
+Usecka Usecka::getOsUhla(const Usecka &other) const
 {
     Bod2D prvyBod = this->getPoloha(other).getpriesecnik();
     Vektor vektor1 = this->getSmerovy().getJednotkovy();
     Vektor vektor2 = other.getSmerovy().getJednotkovy();
     Bod2D druhyBod= vektor1+vektor2+prvyBod;
-    auto os=Usecka(prvyBod,druhyBod);
-    cout<<os.getVseobecna();
-    return os.getVseobecna();
+    return Usecka(prvyBod,druhyBod);
 }
 
 int Trojuholnik::generuj(int min, int max)
@@ -415,11 +412,7 @@ Bod2D Trojuholnik::getTazisko() const
 
 Bod2D Trojuholnik::getOrtocentrum() const
 {
-    Vektor smerovyVc = Usecka(A,B).getNormalovy();
-    Bod2D bodNaVyskeVc {smerovyVc+C};
-    Vektor smerovyVb = Usecka(A,C).getNormalovy();
-    Bod2D bodNaVyskeVb {smerovyVb+B};
-    return Usecka(bodNaVyskeVc,C).getPoloha(Usecka(bodNaVyskeVb,B)).getpriesecnik();
+    return Usecka(getVyska('a')).getPoloha(getVyska('b')).getpriesecnik();
 }
 
 float Trojuholnik::getObvod() const
@@ -431,6 +424,67 @@ float Trojuholnik::getObsah() const
 {
     float s = getObvod()/2;
     return (float)sqrt(s*(s-getVelkostStrany('a'))*(s-getVelkostStrany('b'))*(s-getVelkostStrany('c')));
+}
+
+void Trojuholnik::getOpisanaKruznica() const
+{
+    Usecka osAB = Usecka(A, B).getOsStrany();
+    Usecka osBC = Usecka(B, C).getOsStrany();
+    Bod2D stredKruznice = osAB.getPoloha(osBC).getpriesecnik();
+    float polomerKruznice= stredKruznice.getDistance(A);
+    cout<<showpos<<"Opisana kruznica: (x"<<setprecision(2)<<stredKruznice.getX()<<")^2 + (y"<<setprecision(2)<<stredKruznice.getY()<<")^2 = "<<setprecision(2)<<noshowpos<<polomerKruznice*polomerKruznice<<endl;
+}
+
+void Trojuholnik::getVpisanakruznica() const
+{
+    Usecka osAlfa = Usecka(A,B).getOsUhla(Usecka(A,C));
+    Usecka osBeta = Usecka(B,A).getOsUhla(Usecka(B,C));
+    Bod2D stredKruznice = osAlfa.getPoloha(osBeta).getpriesecnik();
+    Usecka vyskaC = getVyska('c');
+    Bod2D pataVyskyNaA = vyskaC.getPoloha(Usecka(A,B)).getpriesecnik();
+    float polomerKruznice = stredKruznice.getDistance(pataVyskyNaA);
+    cout<<showpos<<"Vpisana kruznica: (x"<<setprecision(2)<<stredKruznice.getX()<<")^2 + (y"<<setprecision(2)<<stredKruznice.getY()<<")^2 = "<<setprecision(2)<<noshowpos<<polomerKruznice*polomerKruznice<<endl;
+}
+
+Usecka Trojuholnik::getTaznica(char naStranu) const
+{
+    switch (naStranu)
+    {
+        case 'a':
+            return { {B.getCenterPoint(C)},A};
+        case 'b':
+            return { {A.getCenterPoint(C)},B};
+        case 'c':
+            return { {A.getCenterPoint(B)},C};
+        default:
+            return { {B.getCenterPoint(C)},A};
+    }
+
+}
+
+Usecka Trojuholnik::getVyska(char naStranu) const
+{
+    Vektor smerovy;
+    Bod2D bodNaVyske;
+    switch (naStranu)
+    {
+        case 'a':
+            smerovy = Usecka(C,B).getNormalovy();
+            bodNaVyske= {smerovy+A};
+            return {bodNaVyske,A};
+        case 'b':
+            smerovy = Usecka(A,C).getNormalovy();
+            bodNaVyske = {smerovy+B};
+            return {bodNaVyske,B};
+        case 'c':
+            smerovy = Usecka(A,B).getNormalovy();
+            bodNaVyske = {smerovy+C};
+            return {bodNaVyske,C};
+        default:
+            smerovy = Usecka(C,B).getNormalovy();
+            bodNaVyske= {smerovy+A};
+            return {bodNaVyske,A};
+    }
 }
 
 void Trojuholnik::MsgErr::getMsg() const

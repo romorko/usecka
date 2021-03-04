@@ -44,5 +44,7 @@ int main()
     cout<<"Obsah je:"<<ABC.getObsah()<<endl;
     cout<<"Tazisko:"<<ABC.getTazisko()<<endl;
     cout<<"Ortocentrum:"<<ABC.getOrtocentrum()<<endl;
+    ABC.getOpisanaKruznica();
+    ABC.getVpisanakruznica();
     return 0;
 }

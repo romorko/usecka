@@ -83,14 +83,14 @@ public:
     Vektor getSmerovy() const;
     Bod2D getCenter() const;
     VR getVseobecna() const;
-    //static VR getVseobecna(const Bod2D &bodik,const Vektor &normalovy);
     PR getParametricka() const;
-    VR getOs() const;
+    Usecka getOsStrany() const;
+    Usecka getOsUhla(const Usecka & other) const;
     bool jeRovnobezna(const Usecka & other) const;
     bool jeTotozna(const Usecka & other) const;
     float getUhol(const Usecka & other, char typ='s') const;
     Poloha getPoloha(const Usecka & other) const;
-    VR getOsUhla(const Usecka & other) const;
+
 
 };
 
@@ -121,6 +121,10 @@ public:
     float getObsah() const;
     Bod2D getTazisko() const;
     Bod2D getOrtocentrum() const;
+    void getOpisanaKruznica() const;
+    void getVpisanakruznica() const;
+    Usecka getVyska(char naStranu) const;
+    Usecka getTaznica(char naStranu) const;
 
 
 };
